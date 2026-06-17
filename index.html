@@ -226,33 +226,6 @@ header h1 em { font-style: italic; color: var(--gold-light); }
   opacity: 0.6;
 }
 
-/* ── LOADING OVERLAY ── */
-.loading-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(42,15,56,0.85);
-  z-index: 200;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  gap: 18px;
-}
-.loading-overlay.active { display: flex; }
-.loading-spinner {
-  width: 36px; height: 36px;
-  border: 2px solid rgba(201,168,76,0.2);
-  border-top-color: var(--gold);
-  border-radius: 50%;
-  animation: spin 0.9s linear infinite;
-}
-@keyframes spin { to { transform: rotate(360deg); } }
-.loading-text {
-  font-family: 'Cormorant Garamond', serif;
-  font-style: italic;
-  font-size: 1.1rem;
-  color: var(--gold-light);
-}
 
 @media (max-width: 480px) {
   header { padding: 40px 16px 24px; }
@@ -601,23 +574,24 @@ header h1 em { font-style: italic; color: var(--gold-light); }
 
 <footer>gemmaserenity.com · © 2026 Gemma Serenity Gorokhoff</footer>
 
-
-
-  <p class="loading-text">Receiving your update…</p>
-</div>
-
 <script>
-
+// ══════════════════════════════════════════════
+// LANGUAGE TOGGLE
+// ══════════════════════════════════════════════
+function setLang(lang) {
+  document.querySelectorAll('.lang-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.lang-btn').forEach(el => el.classList.remove('active'));
+  document.getElementById('lang-' + lang).classList.add('active');
+  document.querySelector('.lang-btn[data-lang="' + lang + '"]').classList.add('active');
+  document.documentElement.lang = lang;
+}
 
 // ══════════════════════════════════════════════
 // PINCH-TO-ZOOM — reflow only, no horizontal scroll
-// Text grows/shrinks within screen width by changing
-// --zoom-size on :root. Layout (html/body) never changes.
 // ══════════════════════════════════════════════
 (function() {
   const MIN_REM = 0.85;
   const MAX_REM = 2.2;
-  const STEP    = 0.01;
   const STORE   = 'gemma_zoom_v2';
 
   let currentRem = parseFloat(localStorage.getItem(STORE) || '1.1');
@@ -629,7 +603,6 @@ header h1 em { font-style: italic; color: var(--gold-light); }
     document.documentElement.style.setProperty('--zoom-size', currentRem + 'rem');
   }
 
-  // Restore saved size on load
   applySize(currentRem);
 
   function touchDist(touches) {
@@ -640,7 +613,7 @@ header h1 em { font-style: italic; color: var(--gold-light); }
 
   document.addEventListener('touchstart', e => {
     if (e.touches.length === 2) {
-      e.preventDefault(); // block native browser zoom
+      e.preventDefault();
       initialDist = touchDist(e.touches);
       initialRem  = currentRem;
     }
