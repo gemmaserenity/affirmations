@@ -965,26 +965,34 @@ OUTPUT FORMAT — return exactly this JSON structure, nothing else:
       })
     });
 
+    // Always read as text first so we never crash on non-JSON
+    const responseText = await response.text();
+    let data;
+    try {
+      data = JSON.parse(responseText);
+    } catch(e) {
+      throw new Error('Worker returned non-JSON: ' + responseText.slice(0, 120));
+    }
+
     if (!response.ok) {
-      let errMsg = `API error ${response.status}`;
-      try {
-        const err = await response.json();
-        errMsg = err.error?.message || errMsg;
-      } catch(e) {}
-      if (response.status === 401) errMsg = 'API key error — check Worker environment variable.';
-      if (response.status === 429) errMsg = 'Rate limited — wait a moment and try again.';
+      const errMsg = data?.error?.message || `API error ${response.status}`;
       throw new Error(errMsg);
     }
 
-    const data = await response.json();
     const raw = data.content?.find(b => b.type === 'text')?.text || '';
+    if (!raw) throw new Error('Empty response from Claude. Try again.');
 
     // Strip any accidental markdown fences
-    const clean = raw.replace(/```json|```/g, '').trim();
-    const parsed = JSON.parse(clean);
+    const clean = raw.replace(/```json[\s\S]*?```|```/g, '').trim();
+    let parsed;
+    try {
+      parsed = JSON.parse(clean);
+    } catch(e) {
+      throw new Error('Claude did not return valid JSON. Raw: ' + clean.slice(0, 120));
+    }
 
     if (!parsed.en || !parsed.fr || !Array.isArray(parsed.en) || !Array.isArray(parsed.fr)) {
-      throw new Error('Unexpected response format from Claude.');
+      throw new Error('Unexpected structure from Claude — missing en or fr arrays.');
     }
 
     affirmations = parsed;
