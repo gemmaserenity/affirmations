@@ -283,38 +283,6 @@ header h1 em { font-style: italic; color: var(--gold-light); }
 }
 .ai-panel.open .ai-panel-body { display: flex; }
 
-.api-key-row {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-  width: 100%;
-  min-width: 0;
-}
-.api-key-row label {
-  font-size: 0.6rem;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--gold);
-  opacity: 0.7;
-}
-.api-key-input {
-  flex: 1;
-  min-width: 0;
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(201,168,76,0.2);
-  color: var(--cream);
-  font-family: 'Jost', sans-serif;
-  font-size: 0.75rem;
-  padding: 8px 12px;
-  outline: none;
-  border-radius: 0;
-  -webkit-appearance: none;
-  width: 100%;
-  box-sizing: border-box;
-}
-.api-key-input::placeholder { color: rgba(250,246,239,0.25); }
-.api-key-input:focus { border-color: rgba(201,168,76,0.5); }
-
 .instruction-row {
   display: flex;
   flex-direction: column;
@@ -439,9 +407,7 @@ footer {
   header { padding: 40px 16px 24px; }
   .thriving-hero { padding: 28px 16px; }
   .aff-num { min-width: 22px; }
-  .api-key-row { flex-direction: column; align-items: flex-start; }
-  .api-key-row label { margin-bottom: 2px; }
-}
+  }
 </style>
 </head>
 <body>
@@ -796,10 +762,7 @@ footer {
     <span class="ai-toggle-arrow">▲</span>
   </div>
   <div class="ai-panel-body">
-    <div class="api-key-row">
-      <label>API Key</label>
-      <input class="api-key-input" type="password" id="apiKeyInput" placeholder="sk-ant-…" autocomplete="off" spellcheck="false"/>
-    </div>
+
     <div class="instruction-row">
       <span class="instruction-label">Your Instruction</span>
       <textarea class="instruction-textarea" id="instructionInput" placeholder="e.g. Add a new affirmation about Hope's healing after ⑯ · Replace ③ with… · Make the thriving hero block more powerful…"></textarea>
@@ -963,10 +926,7 @@ function setStatus(msg, type = '') {
 // SEND INSTRUCTION TO CLAUDE
 // ══════════════════════════════════════════════
 async function sendInstruction() {
-  const apiKey = document.getElementById('apiKeyInput').value.trim();
   const instruction = document.getElementById('instructionInput').value.trim();
-
-  if (!apiKey) { setStatus('Please enter your Anthropic API key.', 'error'); return; }
   if (!instruction) { setStatus('Please describe what you want to change.', 'error'); return; }
 
   document.getElementById('btnSend').disabled = true;
@@ -994,17 +954,12 @@ OUTPUT FORMAT — return exactly this JSON structure, nothing else:
   const userMessage = `CURRENT AFFIRMATIONS:\n${JSON.stringify(affirmations, null, 2)}\n\nINSTRUCTION: ${instruction}`;
 
   try {
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
+    // Calls our Cloudflare Worker proxy — key lives server-side, never in browser
+    const PROXY_URL = 'https://affirmations-api.gemma-serenity.workers.dev';
+    const response = await fetch(PROXY_URL, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': apiKey,
-        'anthropic-version': '2023-06-01',
-        'anthropic-dangerous-direct-browser-access': 'true'
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        model: 'claude-sonnet-4-6',
-        max_tokens: 8000,
         system: systemPrompt,
         messages: [{ role: 'user', content: userMessage }]
       })
@@ -1016,7 +971,7 @@ OUTPUT FORMAT — return exactly this JSON structure, nothing else:
         const err = await response.json();
         errMsg = err.error?.message || errMsg;
       } catch(e) {}
-      if (response.status === 401) errMsg = 'Invalid API key — check your sk-ant-… key.';
+      if (response.status === 401) errMsg = 'API key error — check Worker environment variable.';
       if (response.status === 429) errMsg = 'Rate limited — wait a moment and try again.';
       throw new Error(errMsg);
     }
