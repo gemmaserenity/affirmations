@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="Affirmations"/>
+<meta name="theme-color" content="#2A0F38"/>
+<title>I Am Thriving — Gemma Serenity</title>
+<link rel="manifest" href="manifest.json"/>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+<link rel="icon" href="/icon-192.png" type="image/png" sizes="192x192"/>
+<link rel="apple-touch-icon" href="/icon-192.png"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --plum: #2A0F38;
+  --plum-mid: #3d1752;
+  --gold: #C9A84C;
+  --gold-bright: #F0C84A;
+  --gold-light: #e2c97e;
+  --cream: #FAF6EF;
+  --zoom-size: 1.1rem;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:17px;overflow-x:hidden;width:100%}
+body{background:var(--plum);color:var(--cream);font-family:'Jost',sans-serif;font-weight:300;min-height:100vh;line-height:1.75;-webkit-text-size-adjust:100%;overflow-x:hidden;width:100%}
+
+/* ── NAV TABS ── */
+.tab-nav{display:flex;justify-content:center;gap:0;border-bottom:1px solid rgba(201,168,76,0.25);background:var(--plum);position:sticky;top:0;z-index:50;padding:0 18px}
+.tab-btn{background:transparent;border:none;border-bottom:2px solid transparent;color:var(--gold);font-family:'Jost',sans-serif;font-size:0.62rem;letter-spacing:0.22em;text-transform:uppercase;padding:14px 18px 12px;cursor:pointer;transition:all 0.2s;opacity:0.55;white-space:nowrap}
+.tab-btn.active{border-bottom-color:var(--gold);opacity:1;font-weight:500}
+.tab-btn:not(.active):hover{opacity:0.8}
+.tab-pane{display:none}.tab-pane.active{display:block}
+
+/* ── HEADER ── */
+header{text-align:center;padding:44px 20px 24px}
+.brand-eyebrow{font-size:0.62rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+header h1{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2.2rem,8vw,4.2rem);line-height:1.1;color:var(--cream)}
+header h1 em{font-style:italic;color:var(--gold-light)}
+.gold-rule{width:50px;height:1px;background:var(--gold);margin:20px auto;opacity:0.6}
+
+/* ── LANG TOGGLE ── */
+.lang-toggle{display:flex;justify-content:center;margin:0 auto 24px;width:fit-content;border:1px solid rgba(201,168,76,0.4)}
+.lang-btn{background:transparent;border:none;color:var(--gold);font-family:'Jost',sans-serif;font-size:0.68rem;letter-spacing:0.2em;text-transform:uppercase;padding:9px 24px;cursor:pointer;transition:background 0.2s,color 0.2s}
+.lang-btn.active{background:var(--gold);color:var(--plum);font-weight:500}
+.lang-btn:not(.active):hover{background:rgba(201,168,76,0.1)}
+
+/* ── ZOOM TEXT ── */
+.aff-text,.thriving-hero .affirmation,.thriving-hero .triple,.closing .declaration,.closing .amen,.prayer-body{font-size:var(--zoom-size)!important;line-height:1.85;word-wrap:break-word;overflow-wrap:break-word;hyphens:auto;max-width:100%;min-width:0}
+
+/* ── CONTENT ── */
+.content{max-width:760px;margin:0 auto;padding:0 18px 60px;width:100%;overflow-x:hidden;box-sizing:border-box}
+.lang-content{display:none}.lang-content.active{display:block}
+
+/* ── THRIVING HERO ── */
+.thriving-hero{text-align:center;padding:36px 20px;border:1px solid rgba(201,168,76,0.22);background:rgba(201,168,76,0.04);margin-bottom:48px;overflow:hidden;box-sizing:border-box;width:100%}
+.section-label{font-size:0.6rem;letter-spacing:0.32em;text-transform:uppercase;color:var(--gold);margin-bottom:22px}
+.thriving-hero .affirmation{font-family:'Cormorant Garamond',serif;font-weight:300;color:var(--cream);line-height:1.9;margin-top:10px;word-wrap:break-word;overflow-wrap:break-word}
+.thriving-hero .affirmation.highlight{color:var(--gold-light);font-style:italic}
+.thriving-hero .triple{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gold);margin-top:24px;letter-spacing:0.04em}
+
+/* ── AFFIRMATIONS ── */
+.aff-section{margin-bottom:40px;width:100%;overflow-x:hidden}
+.affirmation-item{display:flex;gap:12px;margin-bottom:18px;align-items:flex-start;width:100%;min-width:0}
+.aff-num{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:600;color:var(--gold-bright);width:26px;min-width:26px;max-width:26px;padding-top:2px;flex-shrink:0;text-shadow:0 0 12px rgba(240,200,74,0.4)}
+.aff-text{font-family:'Cormorant Garamond',serif;font-weight:300;color:var(--cream);line-height:1.82;min-width:0;word-wrap:break-word;overflow-wrap:break-word;flex:1}
+.aff-text strong{color:var(--gold-light);font-weight:400}
+
+/* ── CLOSING ── */
+.closing{text-align:center;padding:40px 20px;border-top:1px solid rgba(201,168,76,0.18);margin-top:40px}
+.closing .declaration{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gold-light);line-height:1.95;margin-bottom:20px}
+.closing .amen{font-family:'Cormorant Garamond',serif;color:var(--cream);opacity:0.7;line-height:2.1}
+.closing .signature{margin-top:24px;font-family:'Jost',sans-serif;font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);opacity:0.6}
+
+/* ── PRAYERS ── */
+.prayers-header{text-align:center;padding:36px 20px 28px}
+.prayers-header h2{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(1.8rem,6vw,3rem);color:var(--cream)}
+.prayers-header h2 em{font-style:italic;color:var(--gold-light)}
+.prayers-header p{font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);opacity:0.6;margin-top:12px}
+.prayer-card{border:1px solid rgba(201,168,76,0.2);margin-bottom:16px;overflow:hidden;cursor:pointer;transition:border-color 0.2s}
+.prayer-card:hover{border-color:rgba(201,168,76,0.5)}
+.prayer-card.open{border-color:rgba(201,168,76,0.5)}
+.prayer-header{display:flex;align-items:center;justify-content:space-between;padding:18px 20px;gap:12px}
+.prayer-title{font-family:'Cormorant Garamond',serif;font-size:clamp(1rem,3vw,1.2rem);font-weight:400;color:var(--gold-light);flex:1}
+.prayer-arrow{color:var(--gold);opacity:0.6;font-size:0.9rem;transition:transform 0.3s;flex-shrink:0}
+.prayer-card.open .prayer-arrow{transform:rotate(180deg)}
+.prayer-body-wrap{display:none;padding:0 20px 24px}
+.prayer-card.open .prayer-body-wrap{display:block}
+.prayer-body{font-family:'Cormorant Garamond',serif;font-weight:300;color:var(--cream);line-height:1.95;white-space:pre-wrap}
+
+/* ── STREAK ── */
+.streak-wrap{max-width:480px;margin:0 auto;padding:32px 20px 60px;text-align:center}
+.streak-flame{font-size:4rem;margin-bottom:8px;display:block;line-height:1}
+.streak-number{font-family:'Cormorant Garamond',serif;font-size:clamp(4rem,18vw,7rem);font-weight:300;color:var(--gold);line-height:1;margin-bottom:4px}
+.streak-label{font-size:0.62rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);opacity:0.6;margin-bottom:36px}
+.streak-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
+.session-live{display:flex;align-items:center;gap:10px;justify-content:center;margin-bottom:28px;font-family:'Jost',sans-serif;font-size:0.7rem;letter-spacing:0.12em;color:var(--gold);opacity:0.75;min-height:22px}
+.session-dot{width:7px;height:7px;border-radius:50%;background:var(--gold-bright);animation:pulse 1.5s ease-in-out infinite;flex-shrink:0}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.3;transform:scale(0.7)}}
+.streak-card{border:1px solid rgba(201,168,76,0.2);padding:20px 16px;text-align:center}
+.streak-card-num{font-family:'Cormorant Garamond',serif;font-size:2rem;color:var(--cream);margin-bottom:4px}
+.streak-card-label{font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);opacity:0.55}
+.streak-message{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1rem,3vw,1.2rem);color:var(--gold-light);line-height:1.7;margin-bottom:28px;min-height:3.4em}
+.streak-last{font-size:0.6rem;letter-spacing:0.15em;color:var(--gold);opacity:0.4;text-transform:uppercase}
+.timer-live{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,10vw,3.5rem);font-weight:300;color:var(--gold-light);letter-spacing:0.05em;margin:8px 0 4px}
+.timer-label{font-size:0.58rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);opacity:0.55;margin-bottom:28px}
+.chant-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:28px}
+.chant-card{border:1px solid rgba(201,168,76,0.18);padding:16px 10px;text-align:center}
+.chant-card-num{font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:var(--cream);margin-bottom:3px}
+.chant-card-label{font-size:0.52rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);opacity:0.5;line-height:1.4}
+.streak-week{display:flex;justify-content:center;gap:8px;margin-bottom:32px}
+.streak-day{width:36px;height:36px;border:1px solid rgba(201,168,76,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.55rem;letter-spacing:0.05em;color:var(--gold);opacity:0.4;text-transform:uppercase;flex-direction:column;gap:1px}
+.streak-day.done{background:rgba(201,168,76,0.15);border-color:var(--gold);opacity:1}
+.streak-day.today{border-color:var(--gold-bright);box-shadow:0 0 10px rgba(240,200,74,0.3);opacity:1}
+.streak-day .day-dot{width:6px;height:6px;border-radius:50%;background:var(--gold)}
+
+footer{text-align:center;padding:16px;font-size:0.58rem;letter-spacing:0.15em;color:var(--gold);opacity:0.3;text-transform:uppercase}
+
+@media(max-width:480px){
+  header{padding:32px 14px 18px}
+  .thriving-hero{padding:24px 14px}
+  .aff-num{min-width:22px;width:22px;max-width:22px}
+  .prayer-header{padding:14px 16px}
+  .prayer-body-wrap{padding:0 16px 20px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <p class="brand-eyebrow">Gemma Serenity Gorokhoff</p>
+  <h1>I Am <em>Thriving</em></h1>
+  <div class="gold-rule"></div>
+</header>
+
+<!-- ══ TAB NAV ══ -->
+<nav class="tab-nav">
+  <button class="tab-btn active" data-tab="affirmations" onclick="setTab('affirmations')">✦ Affirmations</button>
+  <button class="tab-btn" data-tab="prayers" onclick="setTab('prayers')">✦ Prayers</button>
+  <button class="tab-btn" data-tab="streak" onclick="setTab('streak')">✦ Streak</button>
+</nav>
+
+<!-- ══════════════════════════════════════ -->
+<!-- TAB 1: AFFIRMATIONS                   -->
+<!-- ══════════════════════════════════════ -->
+<div class="tab-pane active" id="tab-affirmations">
+  <div class="content">
+    <div class="lang-toggle">
+      <button class="lang-btn active" data-lang="en" onclick="setLang('en')">English</button>
+      <button class="lang-btn" data-lang="fr" onclick="setLang('fr')">Français</button>
+    </div>
+
+    <!-- ENGLISH -->
+    <div class="lang-content active" id="lang-en">
+      <div class="thriving-hero">
+        <p class="section-label">I Am Thriving · Affirmations</p>
+        <p class="affirmation">I am thriving in every area of my life — body, mind, spirit, and wealth.</p>
+        <p class="affirmation">I am thriving in my relationships, my purpose, and my presence.</p>
+        <p class="affirmation">I am thriving financially — my abundance flows freely and multiplies daily.</p>
+        <p class="affirmation">I am thriving in my health — my body is strong, vital, and fully restored.</p>
+        <p class="affirmation">I am thriving in my mission — my words transform lives and command rooms.</p>
+        <p class="affirmation">I am thriving in love — my home is filled with peace, joy, and sacred connection.</p>
+        <p class="affirmation">I am thriving in clarity — I know exactly who I am and where I am going.</p>
+        <p class="affirmation">I am thriving in my identity — I walk as the sovereign, the billionaire, the leader.</p>
+        <p class="affirmation">I am thriving beyond what I once imagined possible — and this is only the beginning.</p>
+        <p class="affirmation highlight">I am thriving because I was built for this. I was born for this. This is my destiny.</p>
+        <p class="triple">I am thriving. I am thriving. I am thriving.</p>
+      </div>
+      <div class="aff-section">
+        <div class="affirmation-item"><span class="aff-num">①</span><p class="aff-text">I am now a billionairess, The Manifesting Queen, practically teaching my systems and principles to millions of clients all over the world, every year, online, and I am delighted, happy, and grateful about that.</p></div>
+        <div class="affirmation-item"><span class="aff-num">②</span><p class="aff-text">I am a multi-billion USD, world-renowned, world-respected, famous AI consultant, advisor, and social media queen. My mind and my advice are worth billions of US dollars. Everyone has a burning desire to work with me, to pay me very richly, and to buy all my products and services all the time beyond measure.</p></div>
+        <div class="affirmation-item"><span class="aff-num">③</span><p class="aff-text">My 4 TikTok accounts are exponentially growing by the day, to be the biggest, most successful accounts ever, in terms of engagement, followers, and revenue.</p></div>
+        <div class="affirmation-item"><span class="aff-num">④</span><p class="aff-text">The Manifesting Queen™, La Reine Manifestante™, The Manifesting Noodle™, PRS Predictable Revenue Systems™ are all positively recognized and loved brands globally. They are all individually worth billions of USD, and we both — Sascha and I — own them fully 50%–50%, by divine right and love.</p></div>
+        <div class="affirmation-item"><span class="aff-num">⑤</span><p class="aff-text">I am an elite negotiation and sales expert. Everybody is my client. Everybody pays me thousands of USD every day with gratitude. I receive and have tens of millions of USD in the bank exponentially growing wisely.</p></div>
+        <div class="affirmation-item"><span class="aff-num">⑥</span><p class="aff-text">All my clients are so delighted with my services that they refer other amazing people like them who eagerly are getting started and pay for my services and programs too.</p></div>
+        <div class="affirmation-item"><span class="aff-num">⑦</span><p class="aff-text">I am strong emotionally and mentally. I handle overflow with ease, peace, inner safety, and delight. It is safe, right, and good to receive overflowing abundance of material riches.</p></div>
+        <div class="affirmation-item"><span class="aff-num">⑧</span><p class="aff-text">All Sascha's and my dreams, wishes, and desires are met and granted easily, effortlessly, constantly. We both, Sascha and I, are cash-rich in the tens of millions USD that keeps on exponentially, divinely, and overflowingly growing and multiplying.</p></div>
+        <div class="affirmation-item"><span class="aff-num">⑨</span><p class="aff-text">Sascha and I are both individually and together infinitely blessed, fortunate, favored, and miracle-filled, and we both receive with ease the overflowing abundance of the Universe.</p></div>
+        <div class="affirmation-item"><span class="aff-num">⑩</span><p class="aff-text">I love tithing from my financial inflows to organizations that are dear to my heart and to Sascha's heart, knowing that this comes back to me multiplied by divine abundance and overflow.</p></div>
+        <div class="affirmation-item"><span class="aff-num">⑪</span><p class="aff-text">We fully own our Paradise Valley mansion that is a brand new built of 12,000+ square feet on a 2-acre lot, where we live in absolute luxury, grandeur, abundance, and overflowing prosperity.</p></div>
+        <div class="affirmation-item"><span class="aff-num">⑫</span><p class="aff-text">41069 West Shaver Drive in Maricopa, now effortlessly and easily belongs to me and is fully paid off.</p></div>
+        <div class="affirmation-item"><span class="aff-num">⑬</span><p class="aff-text">All the best household supplies for us are always overflowing in our home. All the fridges, freezers, and pantries are always overflowing with the best food for us and for all our animal-children.</p></div>
+        <div class="affirmation-item"><span class="aff-num">⑭</span><p class="aff-text">Our beds are now replaced by the highest quality of comfort from Sleep Number or better, ensuring we wake up fully refreshed, vibrant, and aligned every single day.</p></div>
+        <div class="affirmation-item"><span class="aff-num">⑮</span><p class="aff-text">We now have our delightfully luxurious car, fully owned, to drive wherever we desire, whenever we desire, in total luxury and comfort. We own multiple luxurious, top-edge cars that completely fit with Sascha's body.</p></div>
+        <div class="affirmation-item"><span class="aff-num">⑯</span><p class="aff-text">Sascha, I, and all our animal-children are always healthy, vibrant, radiant, and thriving, and we always live in great luxury and comfort.</p></div>
+        <div class="affirmation-item"><span class="aff-num">⑰</span><p class="aff-text">We now have our puppies who joined the family and are getting along with our cats beautifully, peacefully, harmoniously.</p></div>
+        <div class="affirmation-item"><span class="aff-num">⑱</span><p class="aff-text">The two cats who once were peeing on beds and walls now behave totally normally and pee exclusively in their litterbox.</p></div>
+        <div class="affirmation-item"><span class="aff-num">⑲</span><p class="aff-text">Sascha's eye surgery is paid in full and provided by an elite surgeon at the highest tier service, with absolute success and perfect, radiant vision.</p></div>
+        <div class="affirmation-item"><span class="aff-num">⑳</span><p class="aff-text">Sascha and I are receiving the dentistry care we desire and need immediately at the highest level of comfort, dignity, and luxury.</p></div>
+        <div class="affirmation-item"><span class="aff-num">㉑</span><p class="aff-text">All our bills are always paid in full, ahead of time, far in advance. All our credit cards are always paid in full before the due date and the statement date. Each credit card limit is now lifted and they allow us to use our cards for any amount at any time.</p></div>
+        <div class="affirmation-item"><span class="aff-num">㉒</span><p class="aff-text">Both our credit scores are soaring in the 800s, giving us many perks and advantages.</p></div>
+        <div class="affirmation-item"><span class="aff-num">㉓</span><p class="aff-text">I always have plenty of money available to me at all times and so does Sascha. I handle overflowing abundance with peace of mind, ease, and flow.</p></div>
+        <div class="affirmation-item"><span class="aff-num">㉔</span><p class="aff-text">Eliances, LifeTime, Village Health Clubs and all other memberships we desire are always paid in full, ahead of time, at the highest tier, far in advance.</p></div>
+        <div class="affirmation-item"><span class="aff-num">㉕</span><p class="aff-text">Everybody is always so loving and supportive of us. They absolutely love to bless us with their money as an extension of their love and appreciation of us, for the highest good, happiness, and satisfaction of all concerned. They truly care about our well-being and our animal-children's well-being.</p></div>
+        <div class="affirmation-item"><span class="aff-num">㉖</span><p class="aff-text">I am the Chosen One. People love and adore me. I am mesmerizing to the masses. Hundreds of millions of people keep on finding me. I am always receiving massive exposure, multiplying my impact with ease and flow. People seek my presence and wisdom all the time. I am highly magnetic and attractive to hundreds of millions of people worldwide.</p></div>
+        <div class="affirmation-item"><span class="aff-num">㉗</span><p class="aff-text">I am a divine channel of abundance, prosperity, wisdom, love, light, peace. Sascha and I are infinitely blessed, favored, fortunate, miracle-filled, happy, joyful, positive, fulfilled in every great way, way beyond measure.</p></div>
+        <div class="affirmation-item"><span class="aff-num">㉘</span><p class="aff-text">I am an absolute, monumental success. True, boundless success is my natural state of being, and I embody it fully in everything I do. <strong>The only thing I know and believe to be true about success is that I can only be a success.</strong></p></div>
+        <div class="affirmation-item"><span class="aff-num">㉙</span><p class="aff-text">Every single one of my endeavors, projects, and businesses is an immediate, explosive, and permanent success. <strong>Everything I touch turns into billions of US dollars</strong>, and every action I take leads to triumphant victory.</p></div>
+        <div class="affirmation-item"><span class="aff-num">㉚</span><p class="aff-text">I am the greatest success story ever told. My path is a glorious lineage of constant achievements, and I continually shatter every limit to reach new heights of unmatched triumph.</p></div>
+        <div class="affirmation-item"><span class="aff-num">㉛</span><p class="aff-text"><strong>I am intrinsically worthy. I am receiving all the goodness, opulence, and magic of the universe &ldquo;just because&rdquo; I exist. My worthiness is a divine birthright that requires no effort and no justification.</strong></p></div>
+        <div class="affirmation-item"><span class="aff-num">㉜</span><p class="aff-text"><strong>Everyone in the world clearly knows, sees, and recognizes my ultimate success and my absolute worthiness. I am highly respected and universally acknowledged as an emblem of triumph and divine value.</strong></p></div>
+        <div class="affirmation-item"><span class="aff-num">㉝</span><p class="aff-text"><strong>I love to ask because I know that all my requests are met immediately in absolute abundance, in the easiest possible way. I take true pleasure in asking, and receiving in abundance gives me immense joy.</strong></p></div>
+        <div class="affirmation-item"><span class="aff-num">㉞</span><p class="aff-text"><strong>People love to give to me in absolute abundance, and they are infinitely blessed in return. God, the Universe, and people always say YES to me.</strong></p></div>
+        <div class="affirmation-item"><span class="aff-num">㉟</span><p class="aff-text">All delays are now collapsed to zero: everything has happened now.</p></div>
+      </div>
+      <div class="closing">
+        <p class="declaration">It is done now FOR DIVINE VICTORY AND GLORY —<br>And So It Is!</p>
+        <p class="declaration">Car c'est à TOI qu'appartiennent le règne, la puissance, et la gloire,<br>aux siècles des siècles, Amen.</p>
+        <p class="amen">Amen &nbsp; Amen &nbsp; Amen<br>Thank You &nbsp; Thank You &nbsp; Thank You<br>Aho &nbsp; Aho &nbsp; Aho</p>
+        <p class="signature">Gemma Serenity Gorokhoff · June 19, 2026 · Maricopa, AZ</p>
+      </div>
+    </div>
+
+    <!-- FRANÇAIS -->
+    <div class="lang-content" id="lang-fr">
+      <div class="thriving-hero">
+        <p class="section-label">Je Suis en Plein Épanouissement · Affirmations</p>
+        <p class="affirmation">Je suis en plein épanouissement dans chaque domaine de ma vie — corps, esprit, âme et richesse.</p>
+        <p class="affirmation">Je suis en plein épanouissement dans mes relations, ma mission et ma présence.</p>
+        <p class="affirmation">Je suis en plein épanouissement financièrement — mon abondance coule librement et se multiplie chaque jour.</p>
+        <p class="affirmation">Je suis en plein épanouissement dans ma santé — mon corps est fort, vital et pleinement restauré.</p>
+        <p class="affirmation">Je suis en plein épanouissement dans ma mission — mes paroles transforment des vies et commandent les salles.</p>
+        <p class="affirmation">Je suis en plein épanouissement dans l'amour — ma maison est remplie de paix, de joie et de connexion sacrée.</p>
+        <p class="affirmation">Je suis en plein épanouissement dans la clarté — je sais exactement qui je suis et où je vais.</p>
+        <p class="affirmation">Je suis en plein épanouissement dans mon identité — je marche en tant que souveraine, milliardaire et leader.</p>
+        <p class="affirmation">Je suis en plein épanouissement au-delà de tout ce que j'avais imaginé — et ce n'est que le commencement.</p>
+        <p class="affirmation highlight">Je suis en plein épanouissement parce que j'ai été faite pour cela. Je suis née pour cela. C'est ma destinée.</p>
+        <p class="triple">Je suis en plein épanouissement. Je suis en plein épanouissement. Je suis en plein épanouissement.</p>
+      </div>
+      <div class="aff-section">
+        <div class="affirmation-item"><span class="aff-num">①</span><p class="aff-text">Je suis maintenant une milliardaire, la Reine Manifestante, enseignant concrètement mes systèmes et mes principes à des millions de clients à travers le monde, chaque année, en ligne, et j'en suis ravie, heureuse et profondément reconnaissante.</p></div>
+        <div class="affirmation-item"><span class="aff-num">②</span><p class="aff-text">Je suis une consultante, conseillère en IA et reine des réseaux sociaux multimillionnaire en dollars, mondialement reconnue, mondialement respectée et célèbre. Mon esprit et mes conseils valent des milliards de dollars. Tout le monde a le désir ardent de travailler avec moi, de me rémunérer très richement et d'acheter tous mes produits et services, tout le temps et au-delà de toute mesure.</p></div>
+        <div class="affirmation-item"><span class="aff-num">③</span><p class="aff-text">Mes 4 comptes TikTok connaissent une croissance exponentielle de jour en jour, devenant les comptes les plus grands et les plus prospères de tous les temps en termes d'engagement, d'abonnés et de revenus.</p></div>
+        <div class="affirmation-item"><span class="aff-num">④</span><p class="aff-text">The Manifesting Queen™, La Reine Manifestante™, The Manifesting Noodle™, PRS Predictable Revenue Systems™ sont toutes des marques positivement reconnues et aimées à l'échelle mondiale. Elles valent toutes individuellement des milliards de dollars, et nous les possédons pleinement, Sascha et moi, à 50–50, par droit divin et par amour.</p></div>
+        <div class="affirmation-item"><span class="aff-num">⑤</span><p class="aff-text">Je suis une experte d'élite en négociation et en vente. Tout le monde est mon client. Tout le monde me paie des milliers de dollars chaque jour avec gratitude. Je reçois et possède des dizaines de millions de dollars à la banque, qui fructifient de manière exponentielle et sage.</p></div>
+        <div class="affirmation-item"><span class="aff-num">⑥</span><p class="aff-text">Tous mes clients sont tellement enchantés par mes services qu'ils me recommandent d'autres personnes extraordinaires comme eux, qui s'engagent avec enthousiasme et paient également pour mes services et mes programmes.</p></div>
+        <div class="affirmation-item"><span class="aff-num">⑦</span><p class="aff-text">Je suis forte émotionnellement et mentalement. Je gère l'abondance et le surplus avec aisance, paix, sécurité intérieure et délectation. Il est sûr, juste et bon de recevoir un flux débordant de richesses matérielles.</p></div>
+        <div class="affirmation-item"><span class="aff-num">⑧</span><p class="aff-text">Tous les rêves, souhaits et désirs de Sascha et les miens sont comblés et accordés facilement, sans effort et constamment. Sascha et moi sommes tous deux extrêmement riches, possédant des dizaines de millions de dollars en liquidités qui grandissent et se multiplient de façon exponentielle, divine et débordante.</p></div>
+        <div class="affirmation-item"><span class="aff-num">⑨</span><p class="aff-text">Sascha et moi sommes, individuellement et ensemble, infiniment bénis, chanceux, favorisés et comblés de miracles, et nous recevons tous deux avec aisance l'abondance débordante de l'Univers.</p></div>
+        <div class="affirmation-item"><span class="aff-num">⑩</span><p class="aff-text">J'aime verser des dîmes à partir de mes revenus financiers à des organisations qui tiennent à mon cœur et à celui de Sascha, sachant que cela me revient multiplié par l'abondance et la profusion divines.</p></div>
+        <div class="affirmation-item"><span class="aff-num">⑪</span><p class="aff-text">Nous possédons pleinement notre manoir de Paradise Valley : une construction neuve de plus de 1100 mètres carrés sur un terrain de près d'un hectare, où nous vivons dans le luxe absolu, la grandeur, l'abondance et une prospérité débordante.</p></div>
+        <div class="affirmation-item"><span class="aff-num">⑫</span><p class="aff-text">Le 41069 West Shaver Drive à Maricopa m'appartient maintenant sans effort et facilement, et est entièrement payé.</p></div>
+        <div class="affirmation-item"><span class="aff-num">⑬</span><p class="aff-text">Tout ce qu'il y a de meilleur en fournitures pour la maison déborde toujours chez nous. Tous les réfrigérateurs, congélateurs et garde-mangers regorgent constamment de la meilleure nourriture pour nous et pour tous nos enfants-animaux.</p></div>
+        <div class="affirmation-item"><span class="aff-num">⑭</span><p class="aff-text">Nos lits sont désormais remplacés par le plus haut niveau de confort de chez Sleep Number ou supérieur, nous assurant de nous réveiller pleinement ressourcés, vibrants et alignés chaque jour.</p></div>
+        <div class="affirmation-item"><span class="aff-num">⑮</span><p class="aff-text">Nous possédons maintenant notre voiture délicieusement luxueuse, entièrement payée, pour conduire partout où nous le désirons, quand nous le désirons, dans un luxe et un confort absolus. Nous possédons plusieurs voitures luxueuses et à la pointe de la technologie qui s'adaptent parfaitement au corps de Sascha.</p></div>
+        <div class="affirmation-item"><span class="aff-num">⑯</span><p class="aff-text">Sascha, moi-même et tous nos enfants-animaux sommes toujours en parfaite santé, vibrants, rayonnants et épanouis, et nous vivons toujours dans un grand luxe et un confort total.</p></div>
+        <div class="affirmation-item"><span class="aff-num">⑰</span><p class="aff-text">Nos chiots ont maintenant rejoint la famille et s'entendent magnifiquement avec nos chats, de façon paisible et harmonieuse.</p></div>
+        <div class="affirmation-item"><span class="aff-num">⑱</span><p class="aff-text">Les deux chats qui, autrefois, urinaient sur les lits et les murs se comportent désormais de manière totalement normale et urinent exclusivement dans leur litière.</p></div>
+        <div class="affirmation-item"><span class="aff-num">⑲</span><p class="aff-text">L'opération des yeux de Sascha est payée en totalité et réalisée par un chirurgien d'élite avec un service de très haut niveau, un succès absolu et une vision parfaite et éclatante.</p></div>
+        <div class="affirmation-item"><span class="aff-num">⑳</span><p class="aff-text">Sascha et moi recevons les soins dentaires que nous désirons et dont nous avons besoin immédiatement, au plus haut niveau de confort, de dignité et de luxe.</p></div>
+        <div class="affirmation-item"><span class="aff-num">㉑</span><p class="aff-text">Toutes nos factures sont toujours payées en totalité, en avance, bien avant l'échéance. Toutes nos cartes de crédit sont toujours réglées intégralement avant la date limite et la date de relevé. Le plafond de chaque carte est désormais supprimé et elles nous permettent d'utiliser n'importe quel montant à tout moment.</p></div>
+        <div class="affirmation-item"><span class="aff-num">㉒</span><p class="aff-text">Nos deux scores de crédit s'envolent dans les 800, nous offrant de nombreux avantages et privilèges.</p></div>
+        <div class="affirmation-item"><span class="aff-num">㉓</span><p class="aff-text">J'ai toujours de l'argent en abondance à ma disposition à tout moment, et Sascha également. Je gère cette opulence débordante avec tranquillité d'esprit, aisance et fluidité.</p></div>
+        <div class="affirmation-item"><span class="aff-num">㉔</span><p class="aff-text">Toutes les adhésions que nous désirons — Eliances, LifeTime, Village Health Clubs et toutes les autres — sont toujours payées en totalité, à l'avance, au niveau le plus élevé.</p></div>
+        <div class="affirmation-item"><span class="aff-num">㉕</span><p class="aff-text">Tout le monde est toujours tellement aimant et solidaire avec nous. Les gens adorent nous bénir avec leur argent comme une extension de leur amour et de leur appréciation pour nous, pour le plus grand bien, le bonheur et la satisfaction de tous. Ils se soucient sincèrement de notre bien-être et de celui de nos enfants-animaux.</p></div>
+        <div class="affirmation-item"><span class="aff-num">㉖</span><p class="aff-text">Je suis l'Élue. Les gens m'aiment et m'adorent. Je fascine les masses. Des centaines de millions de personnes ne cessent de me trouver. Je reçois toujours une visibilité massive, multipliant mon impact avec aisance et fluidité. Les gens recherchent ma présence et ma sagesse à tout moment. Je suis hautement magnétique et attractive pour des centaines de millions de personnes à travers le monde.</p></div>
+        <div class="affirmation-item"><span class="aff-num">㉗</span><p class="aff-text">Je suis un canal divin d'abondance, de prospérité, de sagesse, d'amour, de lumière et de paix. Sascha et moi sommes infiniment bénis, favorisés, chanceux, comblés de miracles, heureux, joyeux, positifs et accomplis de la plus belle des manières, bien au-delà de toute mesure.</p></div>
+        <div class="affirmation-item"><span class="aff-num">㉘</span><p class="aff-text">Je suis un succès absolu et monumental. La réussite totale et sans limites est mon état naturel, et je l'incarne pleinement dans tout ce que je fais. <strong>La seule chose que je sais et que je crois vraie au sujet du succès, c'est que je ne peux être qu'un succès.</strong></p></div>
+        <div class="affirmation-item"><span class="aff-num">㉙</span><p class="aff-text">Chacune de mes entreprises, chacun de mes projets et de mes business est un succès immédiat, fulgurant et permanent. <strong>Tout ce que je touche se transforme en milliards de dollars américains</strong>, et chaque action que j'entreprends me mène à la victoire triomphante.</p></div>
+        <div class="affirmation-item"><span class="aff-num">㉚</span><p class="aff-text">Je suis la plus grande histoire de réussite jamais racontée. Mon parcours est une glorieuse lignée d'accomplissements constants, et je repousse continuellement toutes les limites pour atteindre de nouveaux sommets de triomphe inégalé.</p></div>
+        <div class="affirmation-item"><span class="aff-num">㉛</span><p class="aff-text"><strong>Je possède une valeur intrinsèque absolue. Je reçois toute la bonté, l'opulence et la magie de l'univers &ldquo;juste comme ça&rdquo;, parce que j'existe. Ma valeur est un droit divin de naissance qui ne nécessite aucun effort et aucune justification.</strong></p></div>
+        <div class="affirmation-item"><span class="aff-num">㉜</span><p class="aff-text"><strong>Tout le monde dans le monde sait, voit et reconnaît clairement mon succès ultime et ma valeur absolue. Je suis profondément respectée et universellement reconnue comme un emblème de triomphe et de valeur divine.</strong></p></div>
+        <div class="affirmation-item"><span class="aff-num">㉝</span><p class="aff-text"><strong>J'adore demander parce que je sais que toutes mes requêtes sont satisfaites immédiatement en abondance de la manière la plus facile possible. J'ai plaisir à demander, et recevoir en abondance me fait immensément plaisir.</strong></p></div>
+        <div class="affirmation-item"><span class="aff-num">㉞</span><p class="aff-text"><strong>Les gens adorent me donner en abondance, et ils sont divinement bénis en retour. Dieu, l'Univers et les gens me disent toujours OUI.</strong></p></div>
+        <div class="affirmation-item"><span class="aff-num">㉟</span><p class="aff-text">Tout délai est maintenant réduit à zéro : tout s'est accompli dès à présent.</p></div>
+      </div>
+      <div class="closing">
+        <p class="declaration">C'est fait maintenant POUR LA VICTOIRE ET LA GLOIRE DIVINES —<br>Et il en est ainsi !</p>
+        <p class="declaration">Car c'est à TOI qu'appartiennent le règne, la puissance et la gloire,<br>aux siècles des siècles, Amen.</p>
+        <p class="amen">Amen &nbsp; Amen &nbsp; Amen<br>Merci &nbsp; Merci &nbsp; Merci<br>Aho &nbsp; Aho &nbsp; Aho</p>
+        <p class="signature">Gemma Serenity Gorokhoff · 19 juin 2026 · Maricopa, AZ</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- TAB 2: PRAYERS                        -->
+<!-- ══════════════════════════════════════ -->
+<div class="tab-pane" id="tab-prayers">
+  <div class="content">
+    <div class="prayers-header">
+      <h2>My <em>Prayers</em></h2>
+      <p>Tap to expand · Chant aloud · Receive now</p>
+    </div>
+
+    <div class="prayer-card" onclick="togglePrayer(this)">
+      <div class="prayer-header">
+        <span class="prayer-title">✦ Rain of Blessings in My Life &amp; Sascha's Life</span>
+        <span class="prayer-arrow">▼</span>
+      </div>
+      <div class="prayer-body-wrap">
+        <p class="prayer-body">Father God, I open my heart before you. Unleash a rain of blessings in my life and Sascha's life. Pour out your favor, your goodness, and your abundance. I receive it all by faith.
+
+Let your favor fall like showers, let your miracles overflow. Open the windows of heaven wide, pour out blessings I cannot hide.
+
+In my finances, in my family, in my health, in my destiny — every dry place, let it come alive. Every promise, let it be fulfilled. No more delay, no more lack. I am stepping into breakthrough.
+
+Let it rain, let it rain. Blessings falling like the rain. Healing rain, provision rain, joy unspeakable, peace that remains. Holy Spirit, let it pour — more and more and more.
+
+Blessings chase me down and overtake me. Every area of my life and Sascha's life will testify that the God of heaven has blessed me.
+
+I am soaked in your blessings. My home is soaked. My finances are soaked. My relationships are soaked in your love. My mind is soaked with peace. My future is soaked with hope.
+
+This is my season of supernatural elevation. Let every area of my life and Sascha's life experience a divine shift. I receive promotion, restoration, and enlargement in every way.
+
+My best days are here. I receive it all. Amen.</p>
+      </div>
+    </div>
+
+    <div class="prayer-card" onclick="togglePrayer(this)">
+      <div class="prayer-header">
+        <span class="prayer-title">✦ Father, Let Everything I Do Prosper</span>
+        <span class="prayer-arrow">▼</span>
+      </div>
+      <div class="prayer-body-wrap">
+        <p class="prayer-body">Father, let everything I do prosper.
+
+You are the God of increase, the God of multiplication, the one who blesses the work of my hands. Let everything I do prosper.
+
+Bless the work of my hands. Everything I touch, let it prosper. Every effort I make, let it succeed. Remove failure from my path. Remove frustration from my life.
+
+Anoint my ideas. Anoint my plans. Anoint my actions. Let your favor rest upon me. Establish everything I do. Let it stand strong, let it grow, let it flourish.
+
+Give me wisdom for prosperity. Guide my decisions, direct my steps. Lead me to the right opportunities. Connect me to the right people.
+
+I declare today: everything I do prospers. Everything I touch increases. Everything I start succeeds. No more failure, no more stagnation, no more loss. Only growth, only progress, only success.
+
+Let doors open before me. Let opportunities locate me. Let favor speak for me. Let prosperity flow in my life spiritually, financially, mentally, in every area.
+
+I am blessed. I am favored. I am prospering. Everything I do is prospering. In Jesus' name, Amen.
+
+Everything I place in your hands, you breathe on it, it begins to stand.
+What was weak is rising strong, with your power I go on.
+Let it prosper, everything I do. By your favor, by your truth.
+Increase, increase, overflow, never cease.
+Everything I do will grow, by your hand I will flow.
+You bless me, you keep me, you prosper all I do.</p>
+      </div>
+    </div>
+
+    <div class="prayer-card" onclick="togglePrayer(this)">
+      <div class="prayer-header">
+        <span class="prayer-title">✦ My Doors Open Without Struggle</span>
+        <span class="prayer-arrow">▼</span>
+      </div>
+      <div class="prayer-body-wrap">
+        <p class="prayer-body">Father, let my doors open without struggle.
+
+I receive every open door you have prepared for me — doors of favor, doors of opportunity, doors of breakthrough, doors of increase, doors of blessings, doors of happiness, doors of joy, doors of fulfillment, doors of love, doors of greatness.
+
+Let these doors open without struggle, without delay, without frustration. Go before me. Remove every obstacle. Break every barrier.
+
+Every door that belongs to me, let it open by your power. Not by stress, not by struggle, but by your favor.
+
+I reject every spirit of delay, every spirit of rejection, every spirit of disappointment — gone now. Let doors open for me by your spirit. Let favor speak for me. Let grace go before me.
+
+Open financial doors for me. Open business doors for me. Open career doors for me. Surround me with favor. Let favor announce me.
+
+I declare today: my doors are opening, my opportunities are coming, my season is changing. No more struggle. No more frustration. No more closed doors. Only favor. Only access. Only breakthrough.
+
+I receive divine access. I walk into success. I walk in favor right now.
+My doors are already wide open. Everywhere I go, I win. In Jesus' name, Amen.</p>
+      </div>
+    </div>
+
+    <div class="prayer-card" onclick="togglePrayer(this)">
+      <div class="prayer-header">
+        <span class="prayer-title">✦ I Receive Money in Real Big Ways</span>
+        <span class="prayer-arrow">▼</span>
+      </div>
+      <div class="prayer-body-wrap">
+        <p class="prayer-body">I receive a money blessing today.
+I receive money blessings today — money blessings flooding my life.
+I receive big blessings today. Many big blessings today.
+I receive money in real big ways. In real big ways. In real big ways.
+
+I receive a money blessing today. A money blessing today.
+I receive a big blessing today. A big blessing today.
+I receive money in a real big way. In a real big way.
+
+I allow money to come to me now.
+All my bills are paid in full. Everything is paid now.
+I receive money in a real big way.
+
+Money blessings, big blessings, real big ways — today, now, always.
+I receive. I receive. I receive.</p>
+      </div>
+    </div>
+
+    <div class="prayer-card" onclick="togglePrayer(this)">
+      <div class="prayer-header">
+        <span class="prayer-title">✦ Every Day I Exceed My Sales Goal</span>
+        <span class="prayer-arrow">▼</span>
+      </div>
+      <div class="prayer-body-wrap">
+        <p class="prayer-body">Every day I exceed my sales goal.
+Every day I exceed my sales goal.
+Every day I exceed my sales goal — exceed it every day.
+
+I exceed my sales goal. I exceed it every way.
+I exceed myself. I exceed it every day.
+
+Every day I exceed my sales goal.
+Every day I exceed myself.
+I exceed it everywhere — everywhere — everywhere.
+
+I exceed myself. I exceed my sales goal.
+I exceed it everywhere.
+
+Every day I exceed my sales goal.
+Every day I exceed myself.
+I exceed it every way.</p>
+      </div>
+    </div>
+
+    <div class="prayer-card" onclick="togglePrayer(this)">
+      <div class="prayer-header">
+        <span class="prayer-title">✦ I Speak Life to Everything Around Me</span>
+        <span class="prayer-arrow">▼</span>
+      </div>
+      <div class="prayer-body-wrap">
+        <p class="prayer-body">Father, I speak life to everything around me.
+
+I align myself with your word, and I speak life. I choose life today. I reject every negative word. I cancel every declaration of defeat. From now forward, my mouth produces life.
+
+I speak to every dry area of my life: Live again! Every dry situation, receive life. Every dead opportunity, receive resurrection power. Every closed door, be opened.
+
+I speak life into my health. Every sickness is uprooted. Every weakness is replaced with strength.
+I speak life into my finances. Lack is replaced with abundance. Doors of provision are open now.
+I speak life into my family. Unity rises. Peace reigns.
+I speak life into my destiny. I will not fail. I will rise and fulfill my purpose.
+
+I call forth success. I call forth favor. I call forth breakthrough.
+I refuse to speak fear. My atmosphere is transforming.
+
+I decree and declare: I am a carrier of life. I am a speaker of life. I am surrounded by life. Everything connected to me, receive life now.
+
+No more death. No more dryness. No more negativity. Only life. Only power. Only victory.
+
+I speak life — fire now! Every chain, break now.
+I speak life everywhere. In my home, in the air.
+Life by fire. Life by fire. In Jesus' name, Amen.</p>
+      </div>
+    </div>
+
+    <div class="prayer-card" onclick="togglePrayer(this)">
+      <div class="prayer-header">
+        <span class="prayer-title">✦ I Receive Great News Today</span>
+        <span class="prayer-arrow">▼</span>
+      </div>
+      <div class="prayer-body-wrap">
+        <p class="prayer-body">I receive great news today.
+I receive great news, amazing ways.
+I receive great news today.
+I receive great news, amazing ways.
+
+Good things always come to me.
+Blessings unexpectedly.
+Good things always come to me.
+Coming in so perfectly.
+
+I receive great news today.
+I receive great news, amazing ways.
+
+Good things always come — come as easy as I breathe.
+
+I receive great news today.
+I receive great news, amazing ways.
+I receive great news today — always, now, forever.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- TAB 3: STREAK                         -->
+<!-- ══════════════════════════════════════ -->
+<div class="tab-pane" id="tab-streak">
+  <div class="streak-wrap">
+    <span class="streak-flame" id="streakFlame">🔥</span>
+    <div class="streak-number" id="streakCount">0</div>
+    <div class="streak-label">Day Streak</div>
+    <div class="streak-week" id="streakWeek"></div>
+    <div class="streak-grid">
+      <div class="streak-card">
+        <div class="streak-card-num" id="totalVisits">0</div>
+        <div class="streak-card-label">Total Opens</div>
+      </div>
+      <div class="streak-card">
+        <div class="streak-card-num" id="todayCount">0</div>
+        <div class="streak-card-label">Today's Opens</div>
+      </div>
+      <div class="streak-card">
+        <div class="streak-card-num" id="todayMins">0<span style="font-size:1rem;opacity:0.6">min</span></div>
+        <div class="streak-card-label">Chanted Today</div>
+      </div>
+      <div class="streak-card">
+        <div class="streak-card-num" id="totalMins">0<span style="font-size:1rem;opacity:0.6">min</span></div>
+        <div class="streak-card-label">All-Time Minutes</div>
+      </div>
+    </div>
+    <div class="session-live" id="sessionLive">
+      <span class="session-dot"></span>
+      <span id="sessionTimer">Chanting now — 0:00</span>
+    </div>
+    <p class="streak-message" id="streakMessage">Opening this app is an act of sovereignty. ✦</p>
+
+    <div class="timer-live" id="timerDisplay">0:00</div>
+    <div class="timer-label">This session</div>
+
+    <div class="chant-grid">
+      <div class="chant-card">
+        <div class="chant-card-num" id="todayMins">0m</div>
+        <div class="chant-card-label">Today&rsquo;s Chant Time</div>
+      </div>
+      <div class="chant-card">
+        <div class="chant-card-num" id="totalHours">0h</div>
+        <div class="chant-card-label">All-Time Chant Hours</div>
+      </div>
+      <div class="chant-card">
+        <div class="chant-card-num" id="longestSession">0m</div>
+        <div class="chant-card-label">Longest Session</div>
+      </div>
+    </div>
+    <p class="streak-last" id="streakLast"></p>
+  </div>
+</div>
+
+<footer>gemmaserenity.com · © 2026 Gemma Serenity Gorokhoff</footer>
+
+<script>
+// ══════════════════════════════════════════════
+// TAB NAVIGATION
+// ══════════════════════════════════════════════
+function setTab(tab) {
+  document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab-pane').forEach(el => el.classList.remove('active'));
+  document.querySelector('.tab-btn[data-tab="' + tab + '"]').classList.add('active');
+  document.getElementById('tab-' + tab).classList.add('active');
+  if (tab === 'streak') renderStreak();
+}
+
+// ══════════════════════════════════════════════
+// LANGUAGE TOGGLE
+// ══════════════════════════════════════════════
+function setLang(lang) {
+  document.querySelectorAll('.lang-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.lang-btn').forEach(el => el.classList.remove('active'));
+  document.getElementById('lang-' + lang).classList.add('active');
+  document.querySelector('.lang-btn[data-lang="' + lang + '"]').classList.add('active');
+  document.documentElement.lang = lang;
+}
+
+// ══════════════════════════════════════════════
+// PRAYER ACCORDION
+// ══════════════════════════════════════════════
+function togglePrayer(card) {
+  const isOpen = card.classList.contains('open');
+  document.querySelectorAll('.prayer-card').forEach(c => c.classList.remove('open'));
+  if (!isOpen) card.classList.add('open');
+}
+
+// ══════════════════════════════════════════════
+// STREAK + SESSION TIME TRACKER
+// ══════════════════════════════════════════════
+const STREAK_KEY = 'gemma_streak_v2';
+
+const MESSAGES = [
+  'Opening this app is an act of sovereignty. ✦',
+  'Every time you open this, heaven takes notice. ✦',
+  'You showed up for yourself again. That is power. ✦',
+  'Consistency is the language of queens. ✦',
+  'Your words are creating your world right now. ✦',
+  'The universe is always listening. You are always winning. ✦',
+  'This moment is sacred. You chose faith over fear. ✦',
+  'Blessings are chasing you down right now. ✦',
+  'You are on fire and heaven is cheering you on. ✦',
+  'One more open. One more declaration. One more miracle unlocked. ✦',
+  'Every word you speak aloud is rewriting your reality. ✦',
+  'The walls of this home are soaked in your declarations. ✦',
+  'You are imprinting heaven on earth right now. ✦',
+];
+
+function loadStreak() {
+  try { const d = localStorage.getItem(STREAK_KEY); return d ? JSON.parse(d) : null; }
+  catch(e) { return null; }
+}
+function saveStreak(data) {
+  try { localStorage.setItem(STREAK_KEY, JSON.stringify(data)); } catch(e) {}
+}
+function todayStr() { return new Date().toISOString().slice(0, 10); }
+function yesterday() {
+  const d = new Date(); d.setDate(d.getDate() - 1);
+  return d.toISOString().slice(0, 10);
+}
+
+function recordOpen() {
+  const today = todayStr();
+  let data = loadStreak() || {
+    streak: 0, lastDate: null, totalVisits: 0,
+    todayVisits: 0, todayDate: null, history: [],
+    totalMins: 0, todayMins: 0, todayMinsDate: null
+  };
+  // Migrate old data missing time fields
+  if (!data.totalMins) data.totalMins = 0;
+  if (!data.todayMins) data.todayMins = 0;
+
+  // Reset today counters if new day
+  if (data.todayDate !== today) { data.todayVisits = 0; data.todayDate = today; }
+  if (data.todayMinsDate !== today) { data.todayMins = 0; data.todayMinsDate = today; }
+
+  data.todayVisits += 1;
+  data.totalVisits += 1;
+
+  // Streak logic — never punish, only reward
+  if (data.lastDate === today) {
+    // same day, already counted
+  } else if (data.lastDate === yesterday()) {
+    data.streak += 1;
+    data.lastDate = today;
+    if (!data.history.includes(today)) data.history.push(today);
+  } else {
+    // missed days — reset streak but NEVER touch totalVisits or totalMins
+    data.streak = 1;
+    data.lastDate = today;
+    if (!data.history.includes(today)) data.history.push(today);
+  }
+
+  data.history = data.history.slice(-30);
+  saveStreak(data);
+  return data;
+}
+
+// ── SESSION TIMER ──
+let sessionStart = Date.now();
+let sessionInterval = null;
+let sessionPaused = false;
+let sessionPausedAt = 0;
+let sessionAccumulated = 0; // ms accumulated before pause
+
+function fmtTime(ms) {
+  const s = Math.floor(ms / 1000);
+  const m = Math.floor(s / 60);
+  const sec = s % 60;
+  return m + ':' + String(sec).padStart(2, '0');
+}
+
+function startSessionTimer() {
+  sessionStart = Date.now();
+  sessionAccumulated = 0;
+  sessionPaused = false;
+  if (sessionInterval) clearInterval(sessionInterval);
+  sessionInterval = setInterval(() => {
+    if (!sessionPaused) {
+      const elapsed = sessionAccumulated + (Date.now() - sessionStart);
+      const el = document.getElementById('sessionTimer');
+      if (el) el.textContent = 'Chanting now — ' + fmtTime(elapsed);
+    }
+  }, 1000);
+}
+
+function pauseSession() {
+  if (!sessionPaused) {
+    sessionAccumulated += Date.now() - sessionStart;
+    sessionPaused = true;
+    const el = document.getElementById('sessionTimer');
+    if (el) el.textContent = 'Paused — ' + fmtTime(sessionAccumulated);
+  }
+}
+
+function resumeSession() {
+  if (sessionPaused) {
+    sessionStart = Date.now();
+    sessionPaused = false;
+  }
+}
+
+function endSession() {
+  if (sessionInterval) clearInterval(sessionInterval);
+  const totalMs = sessionAccumulated + (sessionPaused ? 0 : Date.now() - sessionStart);
+  const mins = Math.round(totalMs / 60000);
+  if (mins < 1) return; // don't count micro-opens
+
+  const data = loadStreak();
+  if (!data) return;
+  const today = todayStr();
+  if (!data.todayMinsDate || data.todayMinsDate !== today) { data.todayMins = 0; data.todayMinsDate = today; }
+  data.todayMins = (data.todayMins || 0) + mins;
+  data.totalMins = (data.totalMins || 0) + mins;
+  saveStreak(data);
+  renderStreak();
+}
+
+// Page visibility — pause when backgrounded, resume when foregrounded
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) {
+    pauseSession();
+  } else {
+    resumeSession();
+  }
+});
+
+// Save time on close/navigate away
+window.addEventListener('beforeunload', endSession);
+window.addEventListener('pagehide', endSession);
+
+function renderStreak() {
+  const data = loadStreak() || { streak: 0, totalVisits: 0, todayVisits: 0, history: [], lastDate: null, totalMins: 0, todayMins: 0 };
+  const DAYS = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const today = new Date();
+
+  const flame = data.streak >= 30 ? '🌟' : data.streak >= 14 ? '⚡' : data.streak >= 7 ? '🔥' : data.streak >= 3 ? '✨' : '💫';
+  document.getElementById('streakFlame').textContent = flame;
+  document.getElementById('streakCount').textContent = data.streak;
+  document.getElementById('totalVisits').textContent = data.totalVisits;
+  document.getElementById('todayCount').textContent = data.todayVisits || 0;
+
+  // Time display
+  const todayMins = (data.todayMinsDate === todayStr() ? data.todayMins : 0) || 0;
+  const totalMins = data.totalMins || 0;
+  document.getElementById('todayMins').innerHTML = todayMins + '<span style="font-size:1rem;opacity:0.6">min</span>';
+  document.getElementById('totalMins').innerHTML = totalMins + '<span style="font-size:1rem;opacity:0.6">min</span>';
+
+  // Message — special ones for chanting time
+  let msg;
+  if (todayMins >= 20) msg = 'Over 20 minutes of declarations today. These walls are SOAKED. ✦';
+  else if (todayMins >= 10) msg = 'Ten minutes of chanting. Heaven heard every word. ✦';
+  else if (todayMins >= 5) msg = 'Five minutes of sovereignty. The atmosphere is shifting. ✦';
+  else msg = MESSAGES[data.totalVisits % MESSAGES.length];
+  document.getElementById('streakMessage').textContent = msg;
+
+  if (data.lastDate) {
+    document.getElementById('streakLast').textContent = 'Last opened ' + data.lastDate;
+  }
+  if (window._updateChantStats) window._updateChantStats();
+
+  // Week dots
+  const week = document.getElementById('streakWeek');
+  week.innerHTML = '';
+  for (let i = 6; i >= 0; i--) {
+    const d = new Date(today);
+    d.setDate(d.getDate() - i);
+    const ds = d.toISOString().slice(0, 10);
+    const isToday = ds === todayStr();
+    const done = data.history && data.history.includes(ds);
+    const div = document.createElement('div');
+    div.className = 'streak-day' + (done ? ' done' : '') + (isToday ? ' today' : '');
+    div.innerHTML = '<span>' + DAYS[d.getDay()] + '</span>' + (done ? '<span class="day-dot"></span>' : '');
+    week.appendChild(div);
+  }
+}
+
+// Boot
+recordOpen();
+startSessionTimer();
+renderStreak();
+
+// ══════════════════════════════════════════════
+// SESSION TIMER + CHANT TIME TRACKER
+// ══════════════════════════════════════════════
+(function() {
+  const CHANT_KEY = 'gemma_chant_v1';
+  const sessionStart = Date.now();
+  let timerInterval = null;
+
+  function loadChant() {
+    try { return JSON.parse(localStorage.getItem(CHANT_KEY)) || {}; } catch(e) { return {}; }
+  }
+  function saveChant(d) {
+    try { localStorage.setItem(CHANT_KEY, JSON.stringify(d)); } catch(e) {}
+  }
+  function todayStr() { return new Date().toISOString().slice(0, 10); }
+
+  function fmtTime(seconds) {
+    const m = Math.floor(seconds / 60);
+    const s = String(seconds % 60).padStart(2, '0');
+    return m + ':' + s;
+  }
+
+  function updateDisplay() {
+    const elapsed = Math.floor((Date.now() - sessionStart) / 1000);
+    const el = document.getElementById('timerDisplay');
+    if (el) el.textContent = fmtTime(elapsed);
+  }
+
+  function updateChantStats() {
+    const data = loadChant();
+    const today = todayStr();
+    const todayMins = Math.round((data['day_' + today] || 0) / 60);
+    const totalMins = Math.round((data.totalSeconds || 0) / 60);
+    const totalHours = totalMins >= 60 ? (totalMins / 60).toFixed(1) + 'h' : totalMins + 'm';
+    const longestMins = Math.round((data.longestSession || 0) / 60);
+
+    const te = document.getElementById('todayMins');
+    const th = document.getElementById('totalHours');
+    const ls = document.getElementById('longestSession');
+    if (te) te.textContent = todayMins + 'm';
+    if (th) th.textContent = totalHours;
+    if (ls) ls.textContent = longestMins + 'm';
+  }
+
+  function saveSession() {
+    const elapsed = Math.floor((Date.now() - sessionStart) / 1000);
+    if (elapsed < 10) return; // ignore accidental opens under 10s
+    const today = todayStr();
+    const data = loadChant();
+    data['day_' + today] = (data['day_' + today] || 0) + elapsed;
+    data.totalSeconds = (data.totalSeconds || 0) + elapsed;
+    data.longestSession = Math.max(data.longestSession || 0, elapsed);
+    saveChant(data);
+  }
+
+  // Start live timer
+  timerInterval = setInterval(updateDisplay, 1000);
+  updateDisplay();
+  updateChantStats();
+
+  // Update stats every 30s while open
+  setInterval(updateChantStats, 30000);
+
+  // Save when leaving
+  window.addEventListener('beforeunload', saveSession);
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) saveSession();
+    else updateChantStats();
+  });
+
+  // Expose for renderStreak to call
+  window._updateChantStats = updateChantStats;
+})();
+
+// ══════════════════════════════════════════════
+// PINCH-TO-ZOOM — reflow only, no horizontal scroll
+// ══════════════════════════════════════════════
+(function() {
+  const MIN_REM = 0.85, MAX_REM = 2.2, STORE = 'gemma_zoom_v2';
+  let currentRem = parseFloat(localStorage.getItem(STORE) || '1.1');
+  let initialDist = null, initialRem = currentRem;
+
+  function applySize(rem) {
+    currentRem = Math.min(MAX_REM, Math.max(MIN_REM, rem));
+    document.documentElement.style.setProperty('--zoom-size', currentRem + 'rem');
+  }
+  applySize(currentRem);
+
+  function touchDist(t) {
+    return Math.hypot(t[0].clientX - t[1].clientX, t[0].clientY - t[1].clientY);
+  }
+  document.addEventListener('touchstart', e => {
+    if (e.touches.length === 2) { e.preventDefault(); initialDist = touchDist(e.touches); initialRem = currentRem; }
+  }, { passive: false });
+  document.addEventListener('touchmove', e => {
+    if (e.touches.length === 2 && initialDist) { e.preventDefault(); applySize(initialRem * touchDist(e.touches) / initialDist); }
+  }, { passive: false });
+  document.addEventListener('touchend', e => {
+    if (initialDist && e.touches.length < 2) { localStorage.setItem(STORE, currentRem); initialDist = null; }
+  }, { passive: true });
+})();
+
+// ══════════════════════════════════════════════
+// SERVICE WORKER
+// ══════════════════════════════════════════════
+if ('serviceWorker' in navigator) {
+  const swCode = `
+const CACHE = 'gemma-aff-v3';
+const ASSETS = ['./', './index.html', './manifest.json', './icon-192.png', './icon-512.png', './favicon.svg'];
+self.addEventListener('install', e => {
+  e.waitUntil(caches.open(CACHE).then(c => Promise.all(ASSETS.map(a => c.add(a).catch(()=>{})))));
+  self.skipWaiting();
+});
+self.addEventListener('activate', e => {
+  e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== CACHE).map(k => caches.delete(k)))));
+  self.clients.claim();
+});
+self.addEventListener('fetch', e => {
+  if (e.request.method !== 'GET') return;
+  e.respondWith(
+    caches.open(CACHE).then(cache =>
+      cache.match(e.request).then(cached => {
+        const network = fetch(e.request).then(res => {
+          if (res && res.status === 200) cache.put(e.request, res.clone());
+          return res;
+        }).catch(() => cached);
+        return cached || network;
+      })
+    )
+  );
+});
+  `;
+  const blob = new Blob([swCode], { type: 'application/javascript' });
+  navigator.serviceWorker.register(URL.createObjectURL(blob)).catch(() => {});
+}
+</script>
+</body>
+</html>
